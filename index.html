@@ -997,9 +997,17 @@
                         html.push(`<div class="step-text">${text}</div>`);
                     }
                     if (images.length) {
-                        html.push('<div class="step-images">');
-                        // Only show the first image on the closed card
-                        let firstSrc = images[0] || '';
+                        // Wir speichern alle Roh-Informationen in data-Attributen,
+                        // damit wir im Overview eine Diashow pro Karte abspielen können.
+                        const serializedImages = JSON.stringify(images);
+                        html.push(`<div class="step-images" data-images='${serializedImages.replace(/'/g, '&#39;')}'>`);
+
+                        // Nur das erste Bild initial anzeigen; das wird dann per JS durchgewechselt.
+                        let firstSrc = images[0];
+                        if (firstSrc && typeof firstSrc === 'object') {
+                            firstSrc = firstSrc.src || '';
+                        }
+                        firstSrc = firstSrc || '';
                         if (firstSrc && !/^https?:\/\//i.test(firstSrc)) {
                             const modelId = currentModelId || (config.id || '').toString();
                             if (modelId) {
@@ -1049,6 +1057,97 @@
 
             root.innerHTML = html.join('');
 
+            // Automatische Diashow in der Overview (Kacheln)
+            (function setupOverviewSlides() {
+                const modelId = currentModelId || (config.id || '').toString();
+                const cards = root.querySelectorAll('.step-card');
+                if (!cards.length) return;
+
+                cards.forEach(card => {
+                    const stepImagesContainer = card.querySelector('.step-images');
+                    const imgEl = stepImagesContainer ? stepImagesContainer.querySelector('.step-image') : null;
+                    if (!stepImagesContainer || !imgEl) return;
+
+                    const data = stepImagesContainer.getAttribute('data-images');
+                    if (!data) return;
+
+                    let rawImages;
+                    try {
+                        rawImages = JSON.parse(data);
+                    } catch (e) {
+                        return;
+                    }
+                    if (!Array.isArray(rawImages) || rawImages.length <= 1) return;
+
+                    // In die gleiche Metastruktur wie im Lightbox-Slider normalisieren
+                    const imageMeta = rawImages.map(img => {
+                        if (typeof img === 'string') {
+                            return { srcRaw: img, durationMs: null };
+                        }
+                        if (img && typeof img === 'object') {
+                            return {
+                                srcRaw: img.src || '',
+                                durationMs: typeof img.durationMs === 'number'
+                                    ? img.durationMs
+                                    : (typeof img.duration === 'number' ? img.duration : null)
+                            };
+                        }
+                        return { srcRaw: '', durationMs: null };
+                    }).filter(m => m.srcRaw);
+
+                    if (!imageMeta.length) return;
+
+                    const resolvedImages = [];
+                    const durations = [];
+                    imageMeta.forEach(m => {
+                        let src = m.srcRaw || '';
+                        if (src && !/^https?:\/\//i.test(src) && modelId) {
+                            src = `${RAW_BASE}/${encodeURIComponent(modelId)}/${encodeURIComponent(src)}`;
+                        }
+                        if (src) {
+                            resolvedImages.push(src);
+                            durations.push(m.durationMs);
+                        }
+                    });
+
+                    if (resolvedImages.length <= 1) return;
+
+                    let currentIndex = 0;
+                    let timerId = null;
+
+                    function clearTimer() {
+                        if (timerId !== null) {
+                            clearTimeout(timerId);
+                            timerId = null;
+                        }
+                    }
+
+                    function scheduleNext() {
+                        clearTimer();
+                        if (!resolvedImages.length) return;
+
+                        let delay = 4000;
+                        const src = (resolvedImages[currentIndex] || '').toLowerCase();
+                        const metaDuration = durations[currentIndex];
+
+                        if (typeof metaDuration === 'number' && metaDuration > 0) {
+                            delay = metaDuration;
+                        } else if (src.endsWith('.gif')) {
+                            delay = 6000; // GIFs 6 Sekunden
+                        }
+
+                        timerId = setTimeout(() => {
+                            currentIndex = (currentIndex + 1) % resolvedImages.length;
+                            imgEl.src = resolvedImages[currentIndex];
+                            scheduleNext();
+                        }, delay);
+                    }
+
+                    // Start Diashow sofort
+                    scheduleNext();
+                });
+            })();
+
             // Attach click handlers for step lightbox with image slider
             const lightbox = document.getElementById('stepLightbox');
             const lightboxBody = document.getElementById('stepLightboxBody');
@@ -1097,17 +1196,49 @@
                         const title = step.title || '';
                         const text = step.text || '';
 
-                        // Determine images for this step (same logic as for cards)
-                        let imgs = [];
+                        // Determine images for this step (same logic as for cards),
+                        // but keep metadata so we can support per-image durations.
+                        let rawImages = [];
                         if (Array.isArray(step.images) && step.images.length) {
-                            imgs = step.images;
+                            rawImages = step.images;
                         } else if (imageMap && n !== '') {
                             const key = String(n);
-                            imgs = imageMap[key] || [];
+                            rawImages = imageMap[key] || [];
                         }
 
                         const modelId = currentModelId || (config.id || '').toString();
-                        const resolvedImages = modelId ? makeAbsoluteImageUrls(modelId, imgs) : imgs;
+
+                        // Normalize to { srcRaw, durationMs } so JSON can optionally
+                        // specify a custom duration per medium, e.g.
+                        // { "src": "Schritt1.gif", "durationMs": 8000 }
+                        const imageMeta = rawImages.map(img => {
+                            if (typeof img === 'string') {
+                                return { srcRaw: img, durationMs: null };
+                            }
+                            if (img && typeof img === 'object') {
+                                return {
+                                    srcRaw: img.src || '',
+                                    durationMs: typeof img.durationMs === 'number'
+                                        ? img.durationMs
+                                        : (typeof img.duration === 'number' ? img.duration : null)
+                                };
+                            }
+                            return { srcRaw: '', durationMs: null };
+                        }).filter(m => m.srcRaw);
+
+                        const resolvedImages = [];
+                        const durations = [];
+
+                        imageMeta.forEach(m => {
+                            let src = m.srcRaw || '';
+                            if (src && !/^https?:\/\//i.test(src) && modelId) {
+                                src = `${RAW_BASE}/${encodeURIComponent(modelId)}/${encodeURIComponent(src)}`;
+                            }
+                            if (src) {
+                                resolvedImages.push(src);
+                                durations.push(m.durationMs);
+                            }
+                        });
 
                         lightboxTitle.textContent = title || (n !== '' ? `Step ${n}` : '');
 
@@ -1155,14 +1286,46 @@
                             const prevBtn = lightboxBody.querySelector('.step-lightbox-arrow-prev');
                             const nextBtn = lightboxBody.querySelector('.step-lightbox-arrow-next');
                             const dotsEls = Array.from(lightboxBody.querySelectorAll('.step-lightbox-dot'));
+                            let autoTimerId = null;
 
-                            function updateImage(index) {
+                            function clearAutoTimer() {
+                                if (autoTimerId !== null) {
+                                    clearTimeout(autoTimerId);
+                                    autoTimerId = null;
+                                }
+                            }
+
+                            function scheduleNext() {
+                                clearAutoTimer();
+                                if (!resolvedImages.length) return;
+
+                                let delay = 4000; // default 4s zwischen Medien
+                                const src = (resolvedImages[currentIndex] || '').toLowerCase();
+
+                                // If a custom duration is provided in JSON, use it.
+                                const metaDuration = durations[currentIndex];
+                                if (typeof metaDuration === 'number' && metaDuration > 0) {
+                                    delay = metaDuration;
+                                } else if (src.endsWith('.gif')) {
+                                    // GIFs standardmäßig 6s anzeigen, außer JSON überschreibt es.
+                                    delay = 6000;
+                                }
+
+                                autoTimerId = setTimeout(() => {
+                                    updateImage(currentIndex + 1, false);
+                                }, delay);
+                            }
+
+                            function updateImage(index, restartTimer = true) {
                                 if (!imgEl) return;
                                 currentIndex = (index + resolvedImages.length) % resolvedImages.length;
                                 imgEl.src = resolvedImages[currentIndex];
                                 dotsEls.forEach((d, i) => {
                                     d.classList.toggle('active', i === currentIndex);
                                 });
+                                if (restartTimer) {
+                                    scheduleNext();
+                                }
                             }
 
                             if (prevBtn) {
@@ -1188,6 +1351,9 @@
                                     }
                                 });
                             });
+
+                            // Start automatic slideshow for this step
+                            scheduleNext();
                         }
                     });
                 });
