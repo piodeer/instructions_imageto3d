@@ -12,7 +12,7 @@
         {
           "number": 1,
           "title": "Motiv mit einer KI erstellen",
-          "text": "Erstelle zunächst ein geeignetes Motiv mit einer KI deiner Wahl. Achte darauf, dass das Bild klare Konturen und einen deutlichen Kontrast hat, damit es später sauber in ein 3D-Modell umgewandelt werden kann."
+          "text": "Erstelle zunächst ein geeignetes Motiv mit einer KI deiner Wahl. Achte darauf, dass das Bild klare Konturen und einen deutlichen Kontrast hat (am besten mit weissem Studio Hintergrund), damit es später sauber in ein 3D-Modell umgewandelt werden kann."
         },
         {
           "number": 2,
@@ -63,4 +63,5 @@
     }
   ]
 }
+
 
