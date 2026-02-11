@@ -1,0 +1,64 @@
+{
+  "id": "endlesscutter",
+  "name": "Endlesscutter",
+  "description": "Guide for the Endlesscutter: from an AI-generated image to a print-ready 3D model using Makerworld and a slicer of your choice.",
+
+  "sections": [
+    {
+      "id": "imageTo3D",
+      "title": "1. From AI Graphic to 3D Model with Makerworld (MakerLab – Image to 3D)",
+      "steps": [
+        {
+          "number": 1,
+          "title": "Create a Design with an AI",
+          "text": "First, create a suitable design using an AI of your choice. Make sure the image has clear contours and strong contrast (ideally with a white studio background) so it can later be converted cleanly into a 3D model."
+        },
+        {
+          "number": 2,
+          "title": "Open Makerworld and Start MakerLab",
+          "text": "Visit makerworld.com, log in, and navigate to the “MakerLab” section in the top menu. Open the “Image to 3D” generator there."
+        },
+        {
+          "number": 3,
+          "title": "Upload Image and Generate 3D Model",
+          "text": "Upload your previously created AI image into the “Image to 3D” generator. Start the conversion and wait until the 3D model has been generated automatically."
+        },
+        {
+          "number": 4,
+          "title": "Download the Model as STL or 3MF",
+          "text": "Once the 3D model is ready, you can save it in your desired format. Choose between STL or 3MF and download the file to your computer."
+        }
+      ]
+    },
+    {
+      "id": "negativeAndPause",
+      "title": "2. Insert Endless Flexi Cutter as a Negative Part in the Slicer",
+      "steps": [
+        {
+          "number": 5,
+          "title": "Open Model in Slicer and Select “Add negative part”",
+          "text": "Open your downloaded model in a slicer of your choice (e.g. Bambu Studio, Orca Slicer, Anycubic Slicer, Creality Slicer, etc.). Right-click on the main object and select “Add negative part”. Then insert the Endless Flexi Cutter, which you can download at the very bottom of this page."
+        },
+        {
+          "number": 6,
+          "title": "Precisely Position the Negative Part",
+          "text": "Position the negative part precisely within the model. Use your slicer’s transformation tools to move, rotate, or scale the object until it sits exactly where you need it."
+        },
+        {
+          "number": 7,
+          "title": "Slice and Print",
+          "text": "Now perform the slicing process and check the preview. If everything looks correct, start the print and produce your Endlesscutter model."
+        }
+      ]
+    }
+  ],
+
+  "links": [
+    {
+      "type": "negativeTool",
+      "url": "https://piodeer.vercel.app/index.html?file=endlesscutter.stl",
+      "label": "Download Endless Flexi Cutter",
+      "note": "Opens the 3D viewer with a download option for the negative model (STL)."
+    }
+  ]
+}
