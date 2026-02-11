@@ -56,12 +56,13 @@
   "links": [
     {
       "type": "negativeTool",
-      "url": "https://piodeer.vercel.app/index.html?file=endlesscutter_negative.stl",
+      "url": "https://piodeer.vercel.app/index.html?file=endlesscutter.stl",
       "label": "Endless Flexi Cutter herunterladen",
       "note": "Öffnet den 3D-Viewer mit Download-Option für das Negativ-Modell (STL)."
     }
   ]
 }
+
 
 
 
