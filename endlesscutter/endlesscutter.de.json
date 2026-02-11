@@ -20,12 +20,12 @@
           "text": "Besuche makerworld.com, melde dich an und navigiere im oberen Menü zum Bereich „MakerLab“. Öffne dort den „Image to 3D“-Generator."
         },
         {
-          "number": 4,
+          "number": 3,
           "title": "Bild hochladen und 3D-Modell erzeugen",
           "text": "Lade dein zuvor erstelltes KI-Bild in den „Image to 3D“-Generator hoch. Starte die Umwandlung und warte, bis das 3D-Modell automatisch generiert wurde."
         },
         {
-          "number": 5,
+          "number": 4,
           "title": "Modell als STL oder 3MF herunterladen",
           "text": "Sobald das 3D-Modell fertig ist, kannst du es im gewünschten Format speichern. Wähle zwischen STL oder 3MF und lade die Datei auf deinen Computer herunter."
         }
@@ -63,3 +63,4 @@
     }
   ]
 }
+
