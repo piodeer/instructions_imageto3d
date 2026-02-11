@@ -2,7 +2,7 @@
   "id": "endlesscutter",
   "name": "Endlesscutter",
   "description": "Beispiel-Workflow für den Endlesscutter: vom KI-generierten Bild bis zum druckfertigen 3D-Modell mit Makerworld und einem Slicer deiner Wahl.",
-  "heroImage": "media/endlesscutter/hero.jpg",
+  "heroImage": "hero.png",
 
   "sections": [
     {
@@ -12,35 +12,22 @@
         {
           "number": 1,
           "title": "Motiv mit einer KI erstellen",
-          "text": "Erstelle zunächst ein geeignetes Motiv mit einer KI deiner Wahl. Achte darauf, dass das Bild klare Konturen und einen deutlichen Kontrast hat, damit es später sauber in ein 3D-Modell umgewandelt werden kann.",
-          "images": [
-            "media/endlesscutter/step1a.jpg",
-            "media/endlesscutter/step1b.jpg"
-          ]
+          "text": "Erstelle zunächst ein geeignetes Motiv mit einer KI deiner Wahl. Achte darauf, dass das Bild klare Konturen und einen deutlichen Kontrast hat, damit es später sauber in ein 3D-Modell umgewandelt werden kann."
         },
         {
           "number": 2,
           "title": "Makerworld öffnen und MakerLab starten",
-          "text": "Besuche makerworld.com, melde dich an und navigiere im oberen Menü zum Bereich „MakerLab“. Öffne dort den „Image to 3D“-Generator.",
-          "images": [
-            "media/endlesscutter/step2.jpg"
-          ]
+          "text": "Besuche makerworld.com, melde dich an und navigiere im oberen Menü zum Bereich „MakerLab“. Öffne dort den „Image to 3D“-Generator."
         },
         {
           "number": 4,
           "title": "Bild hochladen und 3D-Modell erzeugen",
-          "text": "Lade dein zuvor erstelltes KI-Bild in den „Image to 3D“-Generator hoch. Starte die Umwandlung und warte, bis das 3D-Modell automatisch generiert wurde.",
-          "images": [
-            "media/endlesscutter/step4.jpg"
-          ]
+          "text": "Lade dein zuvor erstelltes KI-Bild in den „Image to 3D“-Generator hoch. Starte die Umwandlung und warte, bis das 3D-Modell automatisch generiert wurde."
         },
         {
           "number": 5,
           "title": "Modell als STL oder 3MF herunterladen",
-          "text": "Sobald das 3D-Modell fertig ist, kannst du es im gewünschten Format speichern. Wähle zwischen STL oder 3MF und lade die Datei auf deinen Computer herunter.",
-          "images": [
-            "media/endlesscutter/step5.jpg"
-          ]
+          "text": "Sobald das 3D-Modell fertig ist, kannst du es im gewünschten Format speichern. Wähle zwischen STL oder 3MF und lade die Datei auf deinen Computer herunter."
         }
       ]
     },
@@ -51,27 +38,17 @@
         {
           "number": 6,
           "title": "Modell im Slicer öffnen und „Add negative part“ wählen",
-          "text": "Öffne dein heruntergeladenes Modell in einem Slicer deiner Wahl (z. B. Bambu Studio, Orca Slicer, Anycubic Slicer, Creality Slicer usw.). Klicke mit der rechten Maustaste auf das Hauptobjekt und wähle „Add negative part“. Füge anschließend den Endless Flexi Cutter ein, den du ganz unten auf dieser Seite herunterladen kannst.",
-          "images": [
-            "media/endlesscutter/step6a.jpg",
-            "media/endlesscutter/step6b.jpg"
-          ]
+          "text": "Öffne dein heruntergeladenes Modell in einem Slicer deiner Wahl (z. B. Bambu Studio, Orca Slicer, Anycubic Slicer, Creality Slicer usw.). Klicke mit der rechten Maustaste auf das Hauptobjekt und wähle „Add negative part“. Füge anschließend den Endless Flexi Cutter ein, den du ganz unten auf dieser Seite herunterladen kannst."
         },
         {
           "number": 7,
           "title": "Negativteil exakt positionieren",
-          "text": "Positioniere das Negativteil präzise im Modell. Nutze die Transformations-Werkzeuge deines Slicers, um das Objekt zu verschieben, zu drehen oder zu skalieren, bis es exakt so sitzt, wie du es benötigst.",
-          "images": [
-            "media/endlesscutter/step7.jpg"
-          ]
+          "text": "Positioniere das Negativteil präzise im Modell. Nutze die Transformations-Werkzeuge deines Slicers, um das Objekt zu verschieben, zu drehen oder zu skalieren, bis es exakt so sitzt, wie du es benötigst."
         },
         {
           "number": 8,
           "title": "Slicen und drucken",
-          "text": "Führe nun den Slicing-Vorgang durch und überprüfe die Vorschau. Wenn alles korrekt aussieht, starte den Druck und fertige dein Endlesscutter-Modell an.",
-          "images": [
-            "media/endlesscutter/step8.jpg"
-          ]
+          "text": "Führe nun den Slicing-Vorgang durch und überprüfe die Vorschau. Wenn alles korrekt aussieht, starte den Druck und fertige dein Endlesscutter-Modell an."
         }
       ]
     }
@@ -79,9 +56,9 @@
 
   "links": [
     {
-      "type": "Endlesscutter",
-      "url": "https://piodeer.vercel.app/index.html?file=endlesscutter.stl",
-      "label": "EndlessCutter herunterladen",
+      "type": "negativeTool",
+      "url": "https://piodeer.vercel.app/index.html?file=endlesscutter_negative.stl",
+      "label": "Endless Flexi Cutter herunterladen",
       "note": "Öffnet den 3D-Viewer mit Download-Option für das Negativ-Modell (STL)."
     }
   ]
