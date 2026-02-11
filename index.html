@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image to 3D Instructions - piodeer</title>
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/piodeer/LinkTree/392c8bf5eb91d04289f23203c18cde1a75bd345f/media/logo.png">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #16213e);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 20s infinite ease-in-out;
+            opacity: 0;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(100vh) translateX(0) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.5;
+            }
+            90% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            animation: fadeIn 0.6s ease-in;
+            position: relative;
+            z-index: 1;
+            perspective: 1000px;
+        }
+
+        .lang-switcher {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 10;
+            display: inline-flex;
+            padding: 4px;
+            border-radius: 999px;
+            background: rgba(15, 52, 96, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+        }
+
+        .lang-button {
+            min-width: 40px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            border: none;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .lang-button.active {
+            background: linear-gradient(135deg, rgba(100, 181, 246, 0.7), rgba(100, 181, 246, 0.5));
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(100, 181, 246, 0.4);
+        }
+
+        .lang-button:not(.active):hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            background: #ffffff;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 40px rgba(100, 181, 246, 0.3),
+                        0 0 0 8px rgba(255, 255, 255, 0.05),
+                        0 0 0 12px rgba(255, 255, 255, 0.03);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 8px;
+            animation: gentlePulse 3s ease-in-out infinite, welcomeBounce 2s ease-out;
+            transform-style: preserve-3d;
+        }
+
+        @keyframes gentlePulse {
+            0%, 100% {
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 40px rgba(100, 181, 246, 0.3);
+            }
+            50% {
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 60px rgba(100, 181, 246, 0.5);
+            }
+        }
+
+        @keyframes welcomeBounce {
+            0% {
+                transform: scale(0) rotate(-180deg);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2) rotate(10deg);
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        .avatar img {
+            width: 85%;
+            height: 85%;
+            object-fit: contain;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .avatar:hover {
+            transform: translateZ(20px) scale(1.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 
+                        0 0 100px rgba(100, 181, 246, 0.8),
+                        0 0 0 8px rgba(255, 255, 255, 0.1),
+                        0 0 0 16px rgba(255, 255, 255, 0.05);
+        }
+
+        .welcome-text {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+            background: linear-gradient(45deg, #ffffff, #a0d2ff, #ffffff, #64b5f6);
+            background-size: 300% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s linear infinite, welcomeSlideIn 1s ease-out 0.3s backwards;
+        }
+
+        @keyframes shimmer {
+            to {
+                background-position: 300% center;
+            }
+        }
+
+        @keyframes welcomeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .community-text {
+            font-size: 18px;
+            margin-bottom: 8px;
+            opacity: 0.9;
+            font-weight: 500;
+            animation: fadeInUp 1s ease-out 0.6s backwards;
+            color: #a0d2ff;
+        }
+
+        .slogan-text {
+            font-size: 14px;
+            margin-bottom: 30px;
+            opacity: 0.75;
+            font-weight: 400;
+            font-style: italic;
+            animation: fadeInUp 1s ease-out 0.9s backwards;
+            letter-spacing: 0.5px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 0.9;
+                transform: translateY(0);
+            }
+        }
+
+        .model-summary {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
+            display: grid;
+            grid-template-columns: minmax(0, 2fr) minmax(0, 1.5fr);
+            gap: 20px;
+            text-align: left;
+        }
+
+        .model-text h2 {
+            margin: 0 0 8px 0;
+            font-size: 20px;
+            color: #a0d2ff;
+        }
+
+        .model-text p {
+            margin: 4px 0;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .model-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(100, 181, 246, 0.16);
+            border: 1px solid rgba(100, 181, 246, 0.4);
+            font-size: 12px;
+            margin-bottom: 8px;
+            color: #a0d2ff;
+        }
+
+        .model-image-wrap {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(26, 26, 46, 0.7);
+        }
+
+        .model-image-wrap img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .step-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 16px;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .step-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(100, 181, 246, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .step-number {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: rgba(100, 181, 246, 0.35);
+            border: 1px solid rgba(100, 181, 246, 0.5);
+            color: #a0d2ff;
+            font-weight: 700;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+        }
+
+        .step-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .step-text {
+            font-size: 13px;
+            line-height: 1.6;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .step-images {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            position: relative;
+        }
+
+        .step-image {
+            width: 100%;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(26, 26, 46, 0.7);
+            aspect-ratio: 16/9;
+            object-fit: cover;
+        }
+
+        .step-images-hint {
+            position: absolute;
+            right: 8px;
+            bottom: 8px;
+            padding: 3px 8px;
+            border-radius: 999px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.9);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Step lightbox (full view when clicking on a step) */
+        .step-lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+        }
+
+        .step-lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .step-lightbox-content {
+            max-width: 960px;
+            width: 100%;
+            max-height: 90vh;
+            background: rgba(26, 26, 46, 0.96);
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .step-lightbox-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .step-lightbox-title {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+            color: #a0d2ff;
+        }
+
+        .step-lightbox-close {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .step-lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .step-lightbox-body {
+            padding: 18px 20px 20px 20px;
+            overflow-y: auto;
+        }
+
+        .step-lightbox-body .step-number {
+            margin-bottom: 10px;
+        }
+
+        .step-lightbox-body .step-title {
+            font-size: 17px;
+            margin-bottom: 10px;
+        }
+
+        .step-lightbox-body .step-text {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .step-lightbox-images {
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .step-lightbox-image-frame {
+            flex: 1;
+        }
+
+        .step-lightbox-image {
+            width: 100%;
+            max-height: 60vh;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(26, 26, 46, 0.8);
+            object-fit: contain;
+        }
+
+        .step-lightbox-arrow {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .step-lightbox-arrow:hover {
+            background: rgba(255, 255, 255, 0.16);
+            transform: translateY(-1px);
+        }
+
+        .step-lightbox-dots {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .step-lightbox-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.35);
+        }
+
+        .step-lightbox-dot.active {
+            background: rgba(100, 181, 246, 0.9);
+            width: 18px;
+            border-radius: 10px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #a0d2ff;
+            margin: 24px 0 12px 0;
+            text-align: left;
+        }
+
+        .download-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 12px 0 8px 0;
+            align-items: center;
+        }
+
+        .download-button {
+            flex: 1;
+            padding: 10px 16px;
+            background: linear-gradient(135deg, rgba(100, 181, 246, 0.3), rgba(100, 181, 246, 0.2));
+            border: 2px solid rgba(100, 181, 246, 0.5);
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .download-button:hover {
+            background: linear-gradient(135deg, rgba(100, 181, 246, 0.4), rgba(100, 181, 246, 0.3));
+            border-color: rgba(100, 181, 246, 0.8);
+            transform: translateY(-2px);
+        }
+
+        .note-box {
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            border-left: 3px solid rgba(100, 181, 246, 0.7);
+            padding: 12px 14px;
+            font-size: 12px;
+            text-align: left;
+            opacity: 0.9;
+            margin-top: 6px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 32px;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #a0d2ff;
+            transform: translateX(-5px);
+        }
+
+        .error-message {
+            background: rgba(255, 87, 87, 0.2);
+            border: 1px solid rgba(255, 87, 87, 0.4);
+            border-radius: 16px;
+            padding: 24px;
+            color: #ffcccc;
+            margin-top: 16px;
+            text-align: left;
+        }
+
+        .error-message h2 {
+            margin-top: 0;
+        }
+
+        @media (max-width: 700px) {
+            .model-summary {
+                grid-template-columns: 1fr;
+            }
+
+            .model-image-wrap img {
+                height: 190px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .welcome-text {
+                font-size: 26px;
+            }
+
+            .community-text {
+                font-size: 16px;
+            }
+
+            .slogan-text {
+                font-size: 13px;
+            }
+
+            .step-card {
+                padding: 14px;
+            }
+
+            .section-title {
+                font-size: 16px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .avatar,
+            .welcome-text,
+            .community-text,
+            .slogan-text {
+                animation: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+
+    <div class="lang-switcher" id="langSwitcher" aria-label="Language selector">
+        <button class="lang-button active" data-lang="en" type="button">EN</button>
+        <button class="lang-button" data-lang="de" type="button">DE</button>
+    </div>
+
+    <div class="container">
+        <div class="avatar">
+            <img src="https://raw.githubusercontent.com/piodeer/LinkTree/392c8bf5eb91d04289f23203c18cde1a75bd345f/media/logo.png" alt="piodeer logo">
+        </div>
+
+        <h1 class="welcome-text" id="pageTitle">Image to 3D Instructions</h1>
+        <p class="community-text" id="modelTitle">Model-specific guide</p>
+        <p class="slogan-text" id="pageSubtitle">
+            From a single image to a printable 3D model with Makerworld – including “Add negative part” in the slicer
+        </p>
+
+        <div id="contentRoot"></div>
+
+        <a href="https://makerworld.com" class="back-link" target="_blank" rel="noopener">→ Zu Makerworld</a>
+    </div>
+
+    <div class="step-lightbox" id="stepLightbox" aria-hidden="true">
+        <div class="step-lightbox-content" role="dialog" aria-modal="true" aria-labelledby="stepLightboxTitle">
+            <div class="step-lightbox-header">
+                <h2 class="step-lightbox-title" id="stepLightboxTitle"></h2>
+                <button class="step-lightbox-close" id="stepLightboxClose" type="button" aria-label="Close step view">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 20px; height: 20px;">
+                        <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="step-lightbox-body" id="stepLightboxBody"></div>
+        </div>
+    </div>
+
+    <script>
+        // Background particles
+        (function() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 15;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                const size = Math.random() * 4 + 2;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        })();
+
+        // URL params
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            const results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        const SUPPORTED_LANGS = ['en', 'de'];
+        const RAW_BASE = 'https://raw.githubusercontent.com/piodeer/instructions_imageto3d/main';
+        const GITHUB_API_BASE = 'https://api.github.com/repos/piodeer/instructions_imageto3d/contents';
+        const IMAGE_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.gif', '.webp'];
+        let currentLang = 'en';
+        let currentConfig = null;
+        let currentModelId = null;
+
+        const uiTexts = {
+            title: {
+                en: 'Image to 3D Instructions',
+                de: 'Image to 3D Anleitung'
+            },
+            subtitle: {
+                en: 'From a single image to a printable 3D model with Makerworld – including “Add negative part” in the slicer',
+                de: 'Vom einzelnen Bild zum druckbaren 3D‑Modell mit Makerworld – inklusive „Add negative part“ im Slicer'
+            },
+            defaultModelTitle: {
+                en: 'Model-specific guide',
+                de: 'Modellspezifische Anleitung'
+            },
+            backLink: {
+                en: '→ Go to Makerworld',
+                de: '→ Zu Makerworld'
+            },
+            errorUnknownModelTitle: {
+                en: 'Model not found',
+                de: 'Unbekanntes Modell'
+            },
+            errorUnknownModelText: {
+                en: 'No valid model parameter was found in the URL. Please use a link that contains ?model=...',
+                de: 'Es wurde kein gültiger model‑Parameter in der URL gefunden. Bitte benutze einen Link mit ?model=...'
+            },
+            errorConfigLoadTitle: {
+                en: 'Configuration could not be loaded',
+                de: 'Konfiguration konnte nicht geladen werden'
+            },
+            errorConfigLoadText: {
+                en: 'The configuration file for this model could not be loaded. Please try again later.',
+                de: 'Die Konfigurationsdatei für dieses Modell konnte nicht geladen werden. Bitte versuche es später noch einmal.'
+            },
+            linksSectionTitle: {
+                en: 'Additional resources',
+                de: 'Weitere Ressourcen'
+            }
+        };
+
+        function t(obj) {
+            if (!obj) return '';
+            if (typeof obj === 'string') return obj;
+            return obj[currentLang] || obj.en || '';
+        }
+
+        function setLanguage(lang) {
+            if (!SUPPORTED_LANGS.includes(lang)) return;
+            currentLang = lang;
+            document.documentElement.lang = lang;
+
+            // Update language switcher UI
+            const buttons = document.querySelectorAll('.lang-button');
+            buttons.forEach(btn => {
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // Update static UI texts
+            document.getElementById('pageTitle').textContent = t(uiTexts.title);
+            document.getElementById('pageSubtitle').textContent = t(uiTexts.subtitle);
+            document.querySelector('.back-link').textContent = t(uiTexts.backLink);
+        }
+
+        function setupLanguageSwitcher() {
+            const switcher = document.getElementById('langSwitcher');
+            if (!switcher) return;
+
+            switcher.addEventListener('click', (e) => {
+                const btn = e.target.closest('.lang-button');
+                if (!btn) return;
+                const lang = btn.getAttribute('data-lang');
+                if (lang && SUPPORTED_LANGS.includes(lang)) {
+                    setLanguage(lang);
+                    try {
+                        localStorage.setItem('instructions_lang', lang);
+                    } catch (err) {
+                        // ignore
+                    }
+                    if (currentModelId) {
+                        loadAndRenderConfig(currentModelId);
+                    }
+                }
+            });
+        }
+
+        function getInitialLanguage() {
+            const urlLang = getUrlParameter('lang');
+            if (SUPPORTED_LANGS.includes(urlLang)) return urlLang;
+            try {
+                const stored = localStorage.getItem('instructions_lang');
+                if (SUPPORTED_LANGS.includes(stored)) return stored;
+            } catch (err) {
+                // ignore
+            }
+            const navLang = (navigator.language || 'en').toLowerCase();
+            if (navLang.startsWith('de')) return 'de';
+            return 'en';
+        }
+
+        async function loadModelConfig(modelId, lang) {
+            // Load config files directly from GitHub repo instructions_imageto3d (branch main)
+            // Expected layout in the repo (relative to RAW_BASE):
+            //   <modelId>/<modelId>.de.json
+            //   <modelId>/<modelId>.en.json
+            const tryLangs = lang === 'en' ? ['en'] : [lang, 'en'];
+            let lastError = null;
+
+            for (const l of tryLangs) {
+                const base = encodeURIComponent(modelId);
+                const url = `${RAW_BASE}/${base}/${base}.${l}.json`;
+                try {
+                    const response = await fetch(url, { cache: 'no-cache' });
+                    if (!response.ok) {
+                        continue;
+                    }
+                    const cfg = await response.json();
+                    cfg._lang = l;
+                    return cfg;
+                } catch (err) {
+                    lastError = err;
+                }
+            }
+
+            throw lastError || new Error('Config not found');
+        }
+
+        function isImageFile(name) {
+            const lower = name.toLowerCase();
+            return IMAGE_EXTENSIONS.some(ext => lower.endsWith(ext));
+        }
+
+        async function loadModelImageMap(modelId) {
+            const encodedId = encodeURIComponent(modelId);
+            const url = `${GITHUB_API_BASE}/${encodedId}?ref=main`;
+            const map = {};
+
+            try {
+                const response = await fetch(url, { cache: 'no-cache' });
+                if (!response.ok) {
+                    return map;
+                }
+                const files = await response.json();
+                if (!Array.isArray(files)) return map;
+
+                files.forEach(file => {
+                    if (!file || file.type !== 'file' || !file.name) return;
+                    if (!isImageFile(file.name)) return;
+
+                    const base = file.name.replace(/\.[^.]+$/, '');
+                    // Support both "Schritt1" and "step1" prefixes
+                    const match = base.match(/^(Schritt|step)(\d+)/i);
+                    if (!match) return;
+
+                    const stepNo = match[2]; // e.g. "1", "2"
+                    if (!map[stepNo]) {
+                        map[stepNo] = [];
+                    }
+                    // Use GitHub's download_url if present, otherwise RAW_BASE
+                    const src = file.download_url || `${RAW_BASE}/${encodedId}/${encodeURIComponent(file.name)}`;
+                    map[stepNo].push(src);
+                });
+            } catch (err) {
+                console.error('Error loading image list for model', modelId, err);
+            }
+
+            return map;
+        }
+
+        function renderError(type) {
+            const root = document.getElementById('contentRoot');
+            let title, text;
+
+            if (type === 'unknownModel') {
+                title = t(uiTexts.errorUnknownModelTitle);
+                text = t(uiTexts.errorUnknownModelText);
+            } else {
+                title = t(uiTexts.errorConfigLoadTitle);
+                text = t(uiTexts.errorConfigLoadText);
+            }
+
+            root.innerHTML = `
+                <div class="error-message">
+                    <h2>${title}</h2>
+                    <p>${text}</p>
+                </div>
+            `;
+        }
+
+        function renderFromConfig(config, imageMap) {
+            currentConfig = config;
+
+            const root = document.getElementById('contentRoot');
+            const modelTitle = document.getElementById('modelTitle');
+
+            const displayName = config.name || config.id || '';
+            const description = config.description || '';
+
+            if (displayName) {
+                modelTitle.textContent = displayName + ' – Image to 3D workflow';
+                if (currentLang === 'de') {
+                    modelTitle.textContent = displayName + ' – Image to 3D Workflow';
+                }
+            } else {
+                modelTitle.textContent = t(uiTexts.defaultModelTitle);
+            }
+
+            const heroImage = config.heroImage || (imageMap && imageMap['0'] && imageMap['0'][0]) || '';
+
+            const html = [];
+
+            // model summary
+            html.push(`
+                <div class="model-summary">
+                    <div class="model-text">
+                        <div class="model-badge">
+                            <span>🧩</span>
+                            <span>${displayName || 'Model'}</span>
+                        </div>
+                        <h2>${displayName || ''}</h2>
+                        ${description ? `<p>${description}</p>` : ''}
+                    </div>
+                    <div class="model-image-wrap">
+                        ${heroImage ? `<img src="${heroImage}" alt="${displayName || 'Preview'}" loading="lazy" onerror="this.style.display='none'">` : ''}
+                    </div>
+                </div>
+            `);
+
+            // sections and steps
+            const sections = Array.isArray(config.sections) ? config.sections : [];
+
+            sections.forEach((section, sectionIndex) => {
+                const sectionTitle = section.title || '';
+                if (sectionTitle) {
+                    html.push(`<h2 class="section-title">${sectionTitle}</h2>`);
+                }
+
+                const steps = Array.isArray(section.steps) ? section.steps : [];
+                if (!steps.length) return;
+
+                html.push('<div class="steps-grid">');
+
+                steps.forEach((step, stepIndex) => {
+                    const n = step.number != null ? step.number : '';
+                    const title = step.title || '';
+                    const text = step.text || '';
+                    // If images are defined explicitly in JSON, use them.
+                    // Otherwise, automatically map all files named "Schritt<n>*" or "step<n>*" in the model folder.
+                    let images = [];
+                    if (Array.isArray(step.images) && step.images.length) {
+                        images = step.images;
+                    } else if (imageMap && n !== '') {
+                        const key = String(n);
+                        images = imageMap[key] || [];
+                    }
+
+                    html.push(`<div class="step-card" data-section="${sectionIndex}" data-step="${stepIndex}">`);
+                    if (n !== '') {
+                        html.push(`<div class="step-number">${n}</div>`);
+                    }
+                    if (title) {
+                        html.push(`<div class="step-title">${title}</div>`);
+                    }
+                    if (text) {
+                        html.push(`<div class="step-text">${text}</div>`);
+                    }
+                    if (images.length) {
+                        html.push('<div class="step-images">');
+                        // Only show the first image on the closed card
+                        let firstSrc = images[0] || '';
+                        if (firstSrc && !/^https?:\/\//i.test(firstSrc)) {
+                            const modelId = currentModelId || (config.id || '').toString();
+                            if (modelId) {
+                                firstSrc = `${RAW_BASE}/${encodeURIComponent(modelId)}/${encodeURIComponent(firstSrc)}`;
+                            }
+                        }
+                        if (firstSrc) {
+                            html.push(`
+                                <img class="step-image" src="${firstSrc}" alt="${title || ''}" loading="lazy"
+                                     onerror="this.style.display='none'">
+                            `);
+                        }
+                        if (images.length > 1) {
+                            const extraCount = images.length - 1;
+                            html.push(`
+                                <div class="step-images-hint">
+                                    <span>+${extraCount}</span>
+                                </div>
+                            `);
+                        }
+                        html.push('</div>');
+                    }
+                    html.push('</div>');
+                });
+
+                html.push('</div>');
+            });
+
+            // optional links
+            const links = Array.isArray(config.links) ? config.links : [];
+            if (links.length) {
+                html.push(`<h2 class="section-title">${t(uiTexts.linksSectionTitle)}</h2>`);
+                links.forEach(link => {
+                    const label = link.label || '';
+                    const url = link.url;
+                    if (!url || !label) return;
+                    html.push(`
+                        <div class="download-row">
+                            <a class="download-button" href="${url}" target="_blank" rel="noopener">
+                                <span>${label}</span>
+                            </a>
+                            ${link.note ? `<div class="note-box">${link.note}</div>` : ''}
+                        </div>
+                    `);
+                });
+            }
+
+            root.innerHTML = html.join('');
+
+            // Attach click handlers for step lightbox with image slider
+            const lightbox = document.getElementById('stepLightbox');
+            const lightboxBody = document.getElementById('stepLightboxBody');
+            const lightboxTitle = document.getElementById('stepLightboxTitle');
+            const lightboxClose = document.getElementById('stepLightboxClose');
+
+            function closeLightbox() {
+                if (!lightbox) return;
+                lightbox.classList.remove('active');
+                lightbox.setAttribute('aria-hidden', 'true');
+                if (lightboxBody) {
+                    lightboxBody.innerHTML = '';
+                }
+                if (lightboxTitle) {
+                    lightboxTitle.textContent = '';
+                }
+            }
+
+            function makeAbsoluteImageUrls(modelId, imgs) {
+                return imgs.map(srcRaw => {
+                    let src = srcRaw || '';
+                    if (src && !/^https?:\/\//i.test(src)) {
+                        src = `${RAW_BASE}/${encodeURIComponent(modelId)}/${encodeURIComponent(src)}`;
+                    }
+                    return src;
+                }).filter(Boolean);
+            }
+
+            if (lightbox && lightboxBody && lightboxTitle) {
+                const cards = root.querySelectorAll('.step-card');
+                cards.forEach(card => {
+                    card.addEventListener('click', () => {
+                        const sectionIndex = parseInt(card.getAttribute('data-section') || '-1', 10);
+                        const stepIndex = parseInt(card.getAttribute('data-step') || '-1', 10);
+                        if (
+                            Number.isNaN(sectionIndex) || Number.isNaN(stepIndex) ||
+                            !sections[sectionIndex] ||
+                            !sections[sectionIndex].steps ||
+                            !sections[sectionIndex].steps[stepIndex]
+                        ) {
+                            return;
+                        }
+
+                        const step = sections[sectionIndex].steps[stepIndex];
+                        const n = step.number != null ? step.number : '';
+                        const title = step.title || '';
+                        const text = step.text || '';
+
+                        // Determine images for this step (same logic as for cards)
+                        let imgs = [];
+                        if (Array.isArray(step.images) && step.images.length) {
+                            imgs = step.images;
+                        } else if (imageMap && n !== '') {
+                            const key = String(n);
+                            imgs = imageMap[key] || [];
+                        }
+
+                        const modelId = currentModelId || (config.id || '').toString();
+                        const resolvedImages = modelId ? makeAbsoluteImageUrls(modelId, imgs) : imgs;
+
+                        lightboxTitle.textContent = title || (n !== '' ? `Step ${n}` : '');
+
+                        let bodyHtml = '';
+                        if (n !== '') {
+                            bodyHtml += `<div class="step-number">${n}</div>`;
+                        }
+                        if (title) {
+                            bodyHtml += `<div class="step-title">${title}</div>`;
+                        }
+                        if (text) {
+                            bodyHtml += `<div class="step-text">${text}</div>`;
+                        }
+
+                        if (resolvedImages.length) {
+                            const dots = resolvedImages.map((_, idx) =>
+                                `<div class="step-lightbox-dot${idx === 0 ? ' active' : ''}" data-index="${idx}"></div>`
+                            ).join('');
+
+                            bodyHtml += `
+                                <div class="step-lightbox-images" data-count="${resolvedImages.length}">
+                                    <button class="step-lightbox-arrow step-lightbox-arrow-prev" type="button" aria-label="Previous image">
+                                        ‹
+                                    </button>
+                                    <div class="step-lightbox-image-frame">
+                                        <img class="step-lightbox-image" src="${resolvedImages[0]}" alt="${title || ''}">
+                                    </div>
+                                    <button class="step-lightbox-arrow step-lightbox-arrow-next" type="button" aria-label="Next image">
+                                        ›
+                                    </button>
+                                </div>
+                                <div class="step-lightbox-dots">
+                                    ${dots}
+                                </div>
+                            `;
+                        }
+
+                        lightboxBody.innerHTML = bodyHtml;
+                        lightbox.classList.add('active');
+                        lightbox.setAttribute('aria-hidden', 'false');
+
+                        if (resolvedImages.length > 1) {
+                            let currentIndex = 0;
+                            const imgEl = lightboxBody.querySelector('.step-lightbox-image');
+                            const prevBtn = lightboxBody.querySelector('.step-lightbox-arrow-prev');
+                            const nextBtn = lightboxBody.querySelector('.step-lightbox-arrow-next');
+                            const dotsEls = Array.from(lightboxBody.querySelectorAll('.step-lightbox-dot'));
+
+                            function updateImage(index) {
+                                if (!imgEl) return;
+                                currentIndex = (index + resolvedImages.length) % resolvedImages.length;
+                                imgEl.src = resolvedImages[currentIndex];
+                                dotsEls.forEach((d, i) => {
+                                    d.classList.toggle('active', i === currentIndex);
+                                });
+                            }
+
+                            if (prevBtn) {
+                                prevBtn.addEventListener('click', (e) => {
+                                    e.stopPropagation();
+                                    updateImage(currentIndex - 1);
+                                });
+                            }
+
+                            if (nextBtn) {
+                                nextBtn.addEventListener('click', (e) => {
+                                    e.stopPropagation();
+                                    updateImage(currentIndex + 1);
+                                });
+                            }
+
+                            dotsEls.forEach(dot => {
+                                dot.addEventListener('click', (e) => {
+                                    e.stopPropagation();
+                                    const idx = parseInt(dot.getAttribute('data-index') || '0', 10);
+                                    if (!Number.isNaN(idx)) {
+                                        updateImage(idx);
+                                    }
+                                });
+                            });
+                        }
+                    });
+                });
+
+                if (lightboxClose) {
+                    lightboxClose.onclick = closeLightbox;
+                }
+
+                lightbox.addEventListener('click', (e) => {
+                    if (e.target === lightbox) {
+                        closeLightbox();
+                    }
+                });
+
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                        closeLightbox();
+                    }
+                });
+            }
+        }
+
+        async function loadAndRenderConfig(modelId) {
+            try {
+                const [config, imageMap] = await Promise.all([
+                    loadModelConfig(modelId, currentLang),
+                    loadModelImageMap(modelId)
+                ]);
+                renderFromConfig(config, imageMap);
+            } catch (err) {
+                console.error('Error loading config', err);
+                renderError('configError');
+            }
+        }
+
+        async function initPage() {
+            setupLanguageSwitcher();
+            const initialLang = getInitialLanguage();
+            setLanguage(initialLang);
+
+            const modelId = getUrlParameter('model') || 'fidgetkugel';
+            currentModelId = modelId;
+            if (!modelId) {
+                renderError('unknownModel');
+                return;
+            }
+
+            await loadAndRenderConfig(modelId);
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initPage);
+        } else {
+            initPage();
+        }
+    </script>
+</body>
+</html>
