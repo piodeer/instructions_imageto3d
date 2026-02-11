@@ -36,17 +36,17 @@
       "title": "2. Endless Flexi Cutter als Negativteil im Slicer einfügen",
       "steps": [
         {
-          "number": 6,
+          "number": 5,
           "title": "Modell im Slicer öffnen und „Add negative part“ wählen",
           "text": "Öffne dein heruntergeladenes Modell in einem Slicer deiner Wahl (z. B. Bambu Studio, Orca Slicer, Anycubic Slicer, Creality Slicer usw.). Klicke mit der rechten Maustaste auf das Hauptobjekt und wähle „Add negative part“. Füge anschließend den Endless Flexi Cutter ein, den du ganz unten auf dieser Seite herunterladen kannst."
         },
         {
-          "number": 7,
+          "number": 6,
           "title": "Negativteil exakt positionieren",
           "text": "Positioniere das Negativteil präzise im Modell. Nutze die Transformations-Werkzeuge deines Slicers, um das Objekt zu verschieben, zu drehen oder zu skalieren, bis es exakt so sitzt, wie du es benötigst."
         },
         {
-          "number": 8,
+          "number": 7,
           "title": "Slicen und drucken",
           "text": "Führe nun den Slicing-Vorgang durch und überprüfe die Vorschau. Wenn alles korrekt aussieht, starte den Druck und fertige dein Endlesscutter-Modell an."
         }
@@ -63,5 +63,6 @@
     }
   ]
 }
+
 
 
