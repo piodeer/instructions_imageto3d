@@ -37,7 +37,7 @@
         {
           "number": 5,
           "title": "Open Model in Slicer and Select “Add negative part”",
-          "text": "Open your downloaded model in a slicer of your choice (e.g. Bambu Studio, Orca Slicer, Anycubic Slicer, Creality Slicer, etc.). Right-click on the main object and select “Add negative part”. Then insert the Endless Flexi Cutter, which you can download at the very bottom of this page."
+          "text": "Open your downloaded model in a slicer of your choice (e.g. Bambu Studio, Orca Slicer, Anycubic Slicer, Creality Slicer, etc.). Right-click on the main object and select “Add negative part”. Then insert the Endless Flexi Cutter, which you can download at the very bottom of this page. (Note: Negative parts aren't printed—they are subtracted from the model. This makes it possible to generate joints and cutouts directly in the slicer.)"
         },
         {
           "number": 6,
@@ -62,3 +62,4 @@
     }
   ]
 }
+
