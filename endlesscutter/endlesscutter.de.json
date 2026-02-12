@@ -37,7 +37,7 @@
         {
           "number": 5,
           "title": "Modell im Slicer öffnen und „Add negative part“ wählen",
-          "text": "Öffne dein heruntergeladenes Modell in einem Slicer deiner Wahl (z. B. Bambu Studio, Orca Slicer, Anycubic Slicer, Creality Slicer usw.). Klicke mit der rechten Maustaste auf das Hauptobjekt und wähle „Add negative part“. Füge anschliessend den Endless Flexi Cutter ein, den du ganz unten auf dieser Seite herunterladen kannst. (Zur Info: Ein negatives Part wird vom Drucker nicht ausgedruckt – im Gegenteil, es wird vom aktuellen Modell abgezogen. Dies macht es möglich, Gelenke oder Ähnliches direkt im Slicer zu erzeugen.)"
+          "text": "Öffne dein heruntergeladenes Modell in einem Slicer deiner Wahl (z. B. Bambu Studio, Orca Slicer, Anycubic Slicer, Creality Slicer usw.). Klicke mit der rechten Maustaste auf das Hauptobjekt und wähle „Add negative part“. Füge anschliessend den Endless Flexi Cutter ein, den du ganz unten auf dieser Seite herunterladen kannst."
         },
         {
           "number": 6,
@@ -48,6 +48,32 @@
           "number": 7,
           "title": "Slicen und drucken",
           "text": "Führe nun den Slicing-Vorgang durch und überprüfe die Vorschau. Wenn alles korrekt aussieht, starte den Druck und fertige dein Endlesscutter-Modell an."
+        }
+      ]
+    },
+    {
+      "id": "selling",
+      "title": "3. Modell veröffentlichen & verkaufen",
+      "steps": [
+        {
+          "number": 8,
+          "title": "Modelle online veröffentlichen",
+          "text": "Du kannst dein Modell auf Plattformen wie MakerWorld, MakerOnline, Thangs, Cults3D, Printables, Thingiverse oder MyMiniFactory hochladen. Nutze gute Vorschaubilder, klare Titel, Keywords und eine verständliche Beschreibung, damit dein Modell besser gefunden wird."
+        },
+        {
+          "number": 9,
+          "title": "Digital verkaufen (STL/3MF)",
+          "text": "Digitale Verkäufe funktionieren besonders gut über Cults3D, MyMiniFactory, Thangs oder deinen eigenen Shop (z. B. Gumroad, Shopify). Das lohnt sich vor allem bei viralen Designs, Nischenmodellen oder Sammler-Content, da du keine Produktionskosten hast."
+        },
+        {
+          "number": 10,
+          "title": "Physische Produkte verkaufen",
+          "text": "Physische Drucke kannst du auf Etsy, eBay, Amazon Handmade, Tutti/Willhaben/Kleinanzeigen oder über Social Media (Instagram, TikTok Shop) verkaufen. Das lohnt sich besonders bei Geschenkartikeln, saisonalen Produkten (Weihnachten, Ostern), personalisierten Designs oder wenn deine Zielgruppe keinen eigenen 3D-Drucker besitzt."
+        },
+        {
+          "number": 11,
+          "title": "Welche Plattform sich wann am meisten lohnt",
+          "text": "Community-Plattformen (MakerWorld, Printables) lohnen sich für Reichweite und Bekanntheit. Digitale Marktplätze (Cults3D, MyMiniFactory) eignen sich für skalierbare Einnahmen ohne Aufwand. Etsy & Handmade-Marktplätze sind ideal für physische Geschenkartikel mit höherem Preis. Eigene Shops lohnen sich, sobald du eine Community aufgebaut hast und Gebühren sparen möchtest."
         }
       ]
     }
@@ -62,9 +88,3 @@
     }
   ]
 }
-
-
-
-
-
-
