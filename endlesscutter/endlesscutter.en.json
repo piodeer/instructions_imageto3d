@@ -1,53 +1,79 @@
 {
   "id": "endlesscutter",
   "name": "Endlesscutter",
-  "description": "Guide for the Endlesscutter: from an AI-generated image to a print-ready 3D model using Makerworld and a slicer of your choice.",
+  "description": "Guide for the Endlesscutter: from an AI-generated image to a print-ready 3D model using MakerWorld and a slicer of your choice.",
 
   "sections": [
     {
       "id": "imageTo3D",
-      "title": "1. From AI Graphic to 3D Model with Makerworld (MakerLab – Image to 3D)",
+      "title": "1. From AI Graphic to 3D Model with MakerWorld (MakerLab – Image to 3D)",
       "steps": [
         {
           "number": 1,
-          "title": "Create a Design with an AI",
-          "text": "First, create a suitable design using an AI of your choice. Make sure the image has clear contours and strong contrast (ideally with a white studio background) so it can later be converted cleanly into a 3D model."
+          "title": "Create a design using AI",
+          "text": "Start by creating a suitable design using any AI image generator. Make sure the image has clean outlines and strong contrast (ideally on a white studio background) so it can be converted into a clean 3D model later."
         },
         {
           "number": 2,
-          "title": "Open Makerworld and Start MakerLab",
-          "text": "Visit makerworld.com, log in, and navigate to the “MakerLab” section in the top menu. Open the “Image to 3D” generator there."
+          "title": "Open MakerWorld and launch MakerLab",
+          "text": "Go to makerworld.com, sign in, and navigate to the “MakerLab” section in the top menu. Open the “Image to 3D” generator."
         },
         {
           "number": 3,
-          "title": "Upload Image and Generate 3D Model",
-          "text": "Upload your previously created AI image into the “Image to 3D” generator. Start the conversion and wait until the 3D model has been generated automatically."
+          "title": "Upload image and generate the 3D model",
+          "text": "Upload your AI-generated image into the “Image to 3D” generator. Start the conversion process and wait until the 3D model has been created automatically."
         },
         {
           "number": 4,
-          "title": "Download the Model as STL or 3MF",
-          "text": "Once the 3D model is ready, you can save it in your desired format. Choose between STL or 3MF and download the file to your computer."
+          "title": "Download the model as STL or 3MF",
+          "text": "Once the model is ready, export it in your preferred format. Choose either STL or 3MF and download the file to your computer."
         }
       ]
     },
     {
       "id": "negativeAndPause",
-      "title": "2. Insert Endless Flexi Cutter as a Negative Part in the Slicer",
+      "title": "2. Insert the Endless Flexi Cutter as a Negative Part in Your Slicer",
       "steps": [
         {
           "number": 5,
-          "title": "Open Model in Slicer and Select “Add negative part”",
-          "text": "Open your downloaded model in a slicer of your choice (e.g. Bambu Studio, Orca Slicer, Anycubic Slicer, Creality Slicer, etc.). Right-click on the main object and select “Add negative part”. Then insert the Endless Flexi Cutter, which you can download at the very bottom of this page. (Note: Negative parts aren't printed – they are subtracted from the model. This makes it possible to generate joints and cutouts directly in the slicer.)"
+          "title": "Open the model in your slicer and select “Add negative part”",
+          "text": "Open your downloaded model in any slicer (e.g., Bambu Studio, OrcaSlicer, PrusaSlicer, Cura, Creality Slicer, etc.). Right-click the main object and choose “Add negative part”. Then import the Endless Flexi Cutter file available at the bottom of this page."
         },
         {
           "number": 6,
-          "title": "Precisely Position the Negative Part",
-          "text": "Position the negative part precisely within the model. Use your slicer’s transformation tools to move, rotate, or scale the object until it sits exactly where you need it."
+          "title": "Position the negative part precisely",
+          "text": "Carefully place the negative part inside your model. Use your slicer’s transform tools to move, rotate, or scale the object until it is positioned exactly where you want it."
         },
         {
           "number": 7,
-          "title": "Slice and Print",
-          "text": "Now perform the slicing process and check the preview. If everything looks correct, start the print and produce your Endlesscutter model."
+          "title": "Slice and print",
+          "text": "Run the slicing process and check the preview carefully. If everything looks correct, start the print and produce your Endlesscutter model."
+        }
+      ]
+    },
+    {
+      "id": "selling",
+      "title": "3. Publish & Sell Your Model",
+      "steps": [
+        {
+          "number": 8,
+          "title": "Publish your model online",
+          "text": "Upload your model to platforms such as MakerWorld, Printables, Thingiverse, Thangs, MyMiniFactory, and Cults3D to share it with the community. Use clear titles, strong preview images, detailed descriptions, and relevant tags to improve visibility."
+        },
+        {
+          "number": 9,
+          "title": "Sell digital files (STL/3MF)",
+          "text": "Digital downloads work best on platforms like Cults3D, MyMiniFactory, Thangs, Gumroad, or your own website using Shopify or WooCommerce. This approach is ideal for scalable income, niche designs, or viral models because there are no manufacturing or shipping costs."
+        },
+        {
+          "number": 10,
+          "title": "Sell physical 3D prints",
+          "text": "You can sell physical products on Etsy, eBay, Amazon Handmade, Facebook Marketplace, or through TikTok Shop and Instagram Shops. Physical sales work especially well for gift items, personalized products, seasonal designs (e.g., holidays), or customers who do not own a 3D printer."
+        },
+        {
+          "number": 11,
+          "title": "Which platforms make the most sense and when",
+          "text": "Community platforms like MakerWorld or Printables are great for exposure and building an audience. Digital marketplaces like Cults3D or MyMiniFactory are best for passive income through file sales. Marketplaces like Etsy or Amazon Handmade are ideal for premium physical products and gifts. Running your own store becomes most profitable once you have an established audience and want to reduce platform fees and keep full control."
         }
       ]
     }
@@ -58,11 +84,7 @@
       "type": "negativeTool",
       "url": "https://piodeer.vercel.app/index.html?file=endlesscutter.stl",
       "label": "Download Endless Flexi Cutter",
-      "note": "Opens the 3D viewer with a download option for the negative model (STL)."
+      "note": "Opens the 3D viewer with download option for the negative STL model."
     }
   ]
 }
-
-
-
-
